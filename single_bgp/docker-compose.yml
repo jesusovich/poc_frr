@@ -1,0 +1,77 @@
+---
+version: "3"
+networks:
+  lan1:
+    enable_ipv6: false
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 192.168.100.0/24
+  lan2:
+    enable_ipv6: false
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 192.168.200.0/24
+  wan12:
+    enable_ipv6: false
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 10.10.10.0/24
+services:
+  r1:
+    privileged: true
+    image: frrouting/frr:latest
+    container_name: r1
+    volumes:
+            - $PWD/r1:/etc/frr:rw
+    networks:
+      lan1:
+        ipv4_address: 192.168.100.11
+      wan12:
+        ipv4_address: 10.10.10.11
+  r2:
+    privileged: true
+    image: frrouting/frr:latest
+    container_name: r2
+    volumes:
+            - $PWD/r2:/etc/frr:rw
+    networks:
+      lan2:
+        ipv4_address: 192.168.200.11
+      wan12:
+        ipv4_address: 10.10.10.12
+  pc1:
+    image: busybox:latest
+    container_name: pc1
+    cap_add:
+      - NET_ADMIN
+    command:
+      - sh
+      - -c
+      - |
+        ip route del default
+        ip route add default via 192.168.100.11 dev eth0
+        tail -f /dev/null
+    networks:
+      lan1:
+        ipv4_address: 192.168.100.5
+  pc2:
+    image: busybox:latest
+    container_name: pc2
+    cap_add:
+      - NET_ADMIN
+    command:
+      - sh
+      - -c
+      - |
+        ip route del default
+        ip route add default via 192.168.200.11 dev eth0
+        tail -f /dev/null
+    networks:
+      lan2:
+        ipv4_address: 192.168.200.5
