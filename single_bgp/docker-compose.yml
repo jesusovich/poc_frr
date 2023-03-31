@@ -25,7 +25,7 @@ networks:
 services:
   r1:
     privileged: true
-    image: frrouting/frr:latest
+    image: frrouting/frr:v8.4.0
     container_name: r1
     volumes:
             - $PWD/r1:/etc/frr:rw
@@ -36,7 +36,7 @@ services:
         ipv4_address: 10.10.10.11
   r2:
     privileged: true
-    image: frrouting/frr:latest
+    image: frrouting/frr:v8.4.0
     container_name: r2
     volumes:
             - $PWD/r2:/etc/frr:rw
