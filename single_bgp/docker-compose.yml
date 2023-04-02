@@ -27,6 +27,7 @@ services:
     privileged: true
     image: frrouting/frr:v8.4.0
     container_name: r1
+    restart: always
     volumes:
             - $PWD/r1:/etc/frr:rw
     networks:
@@ -38,6 +39,7 @@ services:
     privileged: true
     image: frrouting/frr:v8.4.0
     container_name: r2
+    restart: always
     volumes:
             - $PWD/r2:/etc/frr:rw
     networks:
@@ -48,6 +50,7 @@ services:
   pc1:
     image: busybox:latest
     container_name: pc1
+    restart: always
     cap_add:
       - NET_ADMIN
     command:
@@ -63,6 +66,7 @@ services:
   pc2:
     image: busybox:latest
     container_name: pc2
+    restart: always
     cap_add:
       - NET_ADMIN
     command:
