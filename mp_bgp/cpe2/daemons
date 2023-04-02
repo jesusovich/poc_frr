@@ -1,6 +1,6 @@
 # This file tells the frr package which daemons to start.
 bgpd=yes
-ospfd=yes
+ospfd=no
 ospf6d=no
 ripd=no
 ripngd=no
