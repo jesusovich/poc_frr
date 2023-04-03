@@ -113,7 +113,7 @@ services:
     container_name: p1
     restart: always
     volumes:
-            - $PWD/r1:/etc/frr:rw
+      - $PWD/p1:/etc/frr:rw
     networks:
       p1_pe1:
         ipv4_address: 10.50.1.11
@@ -131,7 +131,7 @@ services:
     container_name: p2
     restart: always
     volumes:
-            - $PWD/r1:/etc/frr:rw
+      - $PWD/p2:/etc/frr:rw
     networks:
       p2_pe1:
         ipv4_address: 10.50.5.12
@@ -149,7 +149,7 @@ services:
     container_name: pe1
     restart: always
     volumes:
-            - $PWD/r1:/etc/frr:rw
+      - $PWD/pe1:/etc/frr:rw
     networks:
       p1_pe1:
         ipv4_address: 10.50.1.21
@@ -163,7 +163,7 @@ services:
     container_name: pe2
     restart: always
     volumes:
-            - $PWD/r1:/etc/frr:rw
+      - $PWD/pe2:/etc/frr:rw
     networks:
       p1_pe2:
         ipv4_address: 10.50.2.22
@@ -177,7 +177,7 @@ services:
     container_name: pe3
     restart: always
     volumes:
-            - $PWD/r1:/etc/frr:rw
+      - $PWD/pe3:/etc/frr:rw
     networks:
       p1_pe3:
         ipv4_address: 10.50.3.23
@@ -191,7 +191,7 @@ services:
     container_name: pe4
     restart: always
     volumes:
-            - $PWD/r1:/etc/frr:rw
+      - $PWD/pe4:/etc/frr:rw
     networks:
       p1_pe4:
         ipv4_address: 10.50.4.24
@@ -205,7 +205,7 @@ services:
     container_name: cpe1
     restart: always
     volumes:
-            - $PWD/r1:/etc/frr:rw
+      - $PWD/cpe1:/etc/frr:rw
     networks:
       pe1_cpe1:
         ipv4_address: 10.100.1.31
@@ -219,7 +219,7 @@ services:
     container_name: cpe2
     restart: always
     volumes:
-            - $PWD/r1:/etc/frr:rw
+      - $PWD/cpe2:/etc/frr:rw
     networks:
       pe3_cpe2:
         ipv4_address: 10.100.3.32
