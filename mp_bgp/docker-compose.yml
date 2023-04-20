@@ -109,11 +109,24 @@ networks:
 services:
   p1:
     privileged: true
-    image: frrouting/frr:v8.4.0
+    image: frrouting/frr:latest
     container_name: p1
     restart: always
     volumes:
       - $PWD/p1:/etc/frr:rw
+    entrypoint:
+      - bash
+      - -c
+      - |
+        echo 'net.mpls.conf.lo.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth0.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth1.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth2.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth3.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth4.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.platform_labels = 100000' >> /etc/sysctl.conf
+        sysctl -p
+        /sbin/tini -- /usr/lib/frr/docker-start
     networks:
       p1_pe1:
         ipv4_address: 10.50.1.11
@@ -127,11 +140,24 @@ services:
         ipv4_address: 10.50.9.11
   p2:
     privileged: true
-    image: frrouting/frr:v8.4.0
+    image: frrouting/frr:latest
     container_name: p2
     restart: always
     volumes:
       - $PWD/p2:/etc/frr:rw
+    entrypoint:
+      - bash
+      - -c
+      - |
+        echo 'net.mpls.conf.lo.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth0.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth1.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth2.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth3.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth4.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.platform_labels = 100000' >> /etc/sysctl.conf
+        sysctl -p
+        /sbin/tini -- /usr/lib/frr/docker-start
     networks:
       p2_pe1:
         ipv4_address: 10.50.5.12
@@ -145,11 +171,25 @@ services:
         ipv4_address: 10.50.9.12
   pe1:
     privileged: true
-    image: frrouting/frr:v8.4.0
+    image: frrouting/frr:latest
     container_name: pe1
     restart: always
     volumes:
       - $PWD/pe1:/etc/frr:rw
+    entrypoint:
+      - bash
+      - -c
+      - |
+        echo 'net.mpls.conf.lo.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth0.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth1.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth2.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.platform_labels = 100000' >> /etc/sysctl.conf
+        sysctl -p
+        ip link add dev DATA type vrf table 200
+        ip link set dev DATA up
+        ip link set dev eth2 master DATA
+        /sbin/tini -- /usr/lib/frr/docker-start
     networks:
       p1_pe1:
         ipv4_address: 10.50.1.21
@@ -159,11 +199,25 @@ services:
         ipv4_address: 10.100.1.21
   pe2:
     privileged: true
-    image: frrouting/frr:v8.4.0
+    image: frrouting/frr:latest
     container_name: pe2
     restart: always
     volumes:
       - $PWD/pe2:/etc/frr:rw
+    entrypoint:
+      - bash
+      - -c
+      - |
+        echo 'net.mpls.conf.lo.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth0.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth1.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth2.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.platform_labels = 100000' >> /etc/sysctl.conf
+        sysctl -p
+        ip link add dev INTERNET type vrf table 200
+        ip link set dev INTERNET up
+        ip link set dev eth2 master INTERNET
+        /sbin/tini -- /usr/lib/frr/docker-start
     networks:
       p1_pe2:
         ipv4_address: 10.50.2.22
@@ -173,11 +227,25 @@ services:
         ipv4_address: 10.100.2.22
   pe3:
     privileged: true
-    image: frrouting/frr:v8.4.0
+    image: frrouting/frr:latest
     container_name: pe3
     restart: always
     volumes:
       - $PWD/pe3:/etc/frr:rw
+    entrypoint:
+      - bash
+      - -c
+      - |
+        echo 'net.mpls.conf.lo.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth0.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth1.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth2.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.platform_labels = 100000' >> /etc/sysctl.conf
+        sysctl -p
+        ip link add dev DATA type vrf table 200
+        ip link set dev DATA up
+        ip link set dev eth2 master DATA
+        /sbin/tini -- /usr/lib/frr/docker-start
     networks:
       p1_pe3:
         ipv4_address: 10.50.3.23
@@ -187,11 +255,25 @@ services:
         ipv4_address: 10.100.3.23
   pe4:
     privileged: true
-    image: frrouting/frr:v8.4.0
+    image: frrouting/frr:latest
     container_name: pe4
     restart: always
     volumes:
       - $PWD/pe4:/etc/frr:rw
+    entrypoint:
+      - bash
+      - -c
+      - |
+        echo 'net.mpls.conf.lo.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth0.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth1.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.conf.eth2.input = 1' >> /etc/sysctl.conf
+        echo 'net.mpls.platform_labels = 100000' >> /etc/sysctl.conf
+        sysctl -p
+        ip link add dev INTERNET type vrf table 200
+        ip link set dev INTERNET up
+        ip link set dev eth2 master INTERNET
+        /sbin/tini -- /usr/lib/frr/docker-start
     networks:
       p1_pe4:
         ipv4_address: 10.50.4.24
@@ -201,7 +283,7 @@ services:
         ipv4_address: 10.100.4.24
   cpe1:
     privileged: true
-    image: frrouting/frr:v8.4.0
+    image: frrouting/frr:latest
     container_name: cpe1
     restart: always
     volumes:
@@ -215,7 +297,7 @@ services:
         ipv4_address: 10.200.1.31
   cpe2:
     privileged: true
-    image: frrouting/frr:v8.4.0
+    image: frrouting/frr:latest
     container_name: cpe2
     restart: always
     volumes:
