@@ -85,7 +85,7 @@ networks:
       driver: default
       config:
       - subnet: 10.100.3.0/24
-  pe4_cpe2:
+  pe4_dia1:
     enable_ipv6: false
     driver: bridge
     ipam:
@@ -279,7 +279,7 @@ services:
         ipv4_address: 10.50.4.24
       p2_pe4:
         ipv4_address: 10.50.8.24
-      pe4_cpe2:
+      pe4_dia1:
         ipv4_address: 10.100.4.24
   cpe1:
     privileged: true
@@ -288,6 +288,16 @@ services:
     restart: always
     volumes:
       - $PWD/cpe1:/etc/frr:rw
+    entrypoint:
+      - bash
+      - -c
+      - |
+        ip link add dev VPN type vrf table 200
+        ip link set dev VPN up
+        ip link set dev eth0 master VPN
+        ip link set dev eth1 master VPN
+        ip link set dev eth2 master VPN
+        /sbin/tini -- /usr/lib/frr/docker-start
     networks:
       pe1_cpe1:
         ipv4_address: 10.100.1.31
@@ -302,13 +312,36 @@ services:
     restart: always
     volumes:
       - $PWD/cpe2:/etc/frr:rw
+    entrypoint:
+      - bash
+      - -c
+      - |
+        ip link add dev VPN type vrf table 200
+        ip link set dev VPN up
+        ip link set dev eth0 master VPN
+        ip link set dev eth1 master VPN
+        /sbin/tini -- /usr/lib/frr/docker-start
     networks:
       pe3_cpe2:
         ipv4_address: 10.100.3.32
-      pe4_cpe2:
-        ipv4_address: 10.100.4.32
       cpe2_pc2:
         ipv4_address: 10.200.2.32
+  dia1:
+    privileged: true
+    image: frrouting/frr:latest
+    container_name: dia1
+    restart: always
+    volumes:
+      - $PWD/dia1:/etc/frr:rw
+    entrypoint:
+      - bash
+      - -c
+      - |
+        iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+        /sbin/tini -- /usr/lib/frr/docker-start
+    networks:
+      pe4_dia1:
+        ipv4_address: 10.100.4.33
   pc1:
     image: busybox:latest
     container_name: pc1
