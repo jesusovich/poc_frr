@@ -113,7 +113,7 @@ services:
     container_name: p1
     restart: always
     volumes:
-      - $PWD/p1:/etc/frr:rw
+      - $PWD/devices/p1:/etc/frr:rw
     entrypoint:
       - bash
       - -c
@@ -144,7 +144,7 @@ services:
     container_name: p2
     restart: always
     volumes:
-      - $PWD/p2:/etc/frr:rw
+      - $PWD/devices/p2:/etc/frr:rw
     entrypoint:
       - bash
       - -c
@@ -175,7 +175,7 @@ services:
     container_name: pe1
     restart: always
     volumes:
-      - $PWD/pe1:/etc/frr:rw
+      - $PWD/devices/pe1:/etc/frr:rw
     entrypoint:
       - bash
       - -c
@@ -203,7 +203,7 @@ services:
     container_name: pe2
     restart: always
     volumes:
-      - $PWD/pe2:/etc/frr:rw
+      - $PWD/devices/pe2:/etc/frr:rw
     entrypoint:
       - bash
       - -c
@@ -231,7 +231,7 @@ services:
     container_name: pe3
     restart: always
     volumes:
-      - $PWD/pe3:/etc/frr:rw
+      - $PWD/devices/pe3:/etc/frr:rw
     entrypoint:
       - bash
       - -c
@@ -259,7 +259,7 @@ services:
     container_name: pe4
     restart: always
     volumes:
-      - $PWD/pe4:/etc/frr:rw
+      - $PWD/devices/pe4:/etc/frr:rw
     entrypoint:
       - bash
       - -c
@@ -287,7 +287,7 @@ services:
     container_name: cpe1
     restart: always
     volumes:
-      - $PWD/cpe1:/etc/frr:rw
+      - $PWD/devices/cpe1:/etc/frr:rw
     entrypoint:
       - bash
       - -c
@@ -311,7 +311,7 @@ services:
     container_name: cpe2
     restart: always
     volumes:
-      - $PWD/cpe2:/etc/frr:rw
+      - $PWD/devices/cpe2:/etc/frr:rw
     entrypoint:
       - bash
       - -c
@@ -332,7 +332,7 @@ services:
     container_name: dia1
     restart: always
     volumes:
-      - $PWD/dia1:/etc/frr:rw
+      - $PWD/devices/dia1:/etc/frr:rw
     entrypoint:
       - bash
       - -c
